@@ -45,5 +45,20 @@ void AFPSBlackHole::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TArray<UPrimitiveComponent*> OverlappingComps;
+	OuterSphereComponent->GetOverlappingComponents(OverlappingComps);
+
+	for (int32 i = 0; i < OverlappingComps.Num(); i++)
+	{
+		UPrimitiveComponent* PrimComp = OverlappingComps[i];
+		if (PrimComp && PrimComp->IsSimulatingPhysics())
+		{
+			const float SphereRadius = OuterSphereComponent->GetScaledSphereRadius();
+			const float ForceStrength = -2000;
+
+			PrimComp->AddRadialForce(GetActorLocation(), SphereRadius, ForceStrength, ERadialImpulseFalloff::RIF_Constant, true);
+		}
+	}
+
 }
 
