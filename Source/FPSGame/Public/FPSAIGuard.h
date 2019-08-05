@@ -28,6 +28,13 @@ protected:
 	UFUNCTION()
 	void OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, float Volume);
 
+	FRotator OriginalRotation;
+
+	FTimerHandle TimerHandle_ResetOrientation;
+
+	UFUNCTION()
+	void ResetOrientation();
+
 	UFUNCTION(BlueprintCallable, Category = "SeenPawn")
 	void Seen(APawn* SeenPawn);
 
